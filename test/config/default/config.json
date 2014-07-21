@@ -1,0 +1,10 @@
+{
+    "hello": "world",
+    "sub": {
+        "a": "default",
+        "b": "default"
+    },
+    "many": [
+        1, 2, 3
+    ]
+}

@@ -1,0 +1,10 @@
+{
+    "hello": "changed",
+    "sub": {
+        "a": "changed",
+        "c": "changed"
+    },
+    "many": [
+        4, 3
+    ]
+}

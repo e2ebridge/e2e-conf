@@ -1,0 +1,39 @@
+{
+    "name": "e2e-conf",
+    "version": "0.0.1",
+    "main": "conf.js",
+    "dependencies": {
+        "nconf": "^0.6.9",
+        "fs-extra": "^0.9.1",
+        "async": "^0.9.0"
+    },
+    "devDependencies": {
+        "nodeunit": "^0.9.0"
+    },
+    "author": {
+        "name": "E2E Technologies Ltd",
+        "email": "support@e2ebridge.com",
+        "url": "http://e2ebridge.com"
+    },
+    "maintainers": [
+        {
+            "name": "Alfred Gebert",
+            "email": "agebert@e2ebridge.com"
+        }
+    ],
+    "scripts": [
+        {
+            "test": "node ./node_modules/nodeunit/bin/nodeunit test/conf.test.js"
+        }
+    ],
+    "license": "MIT",
+    "description": "E2E Bridge can manage service configurations for different deployments",
+    "keywords": [
+        "configuration",
+        "e2ebridge"
+    ],
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/e2ebridge/e2e-conf.git"
+    }
+}
