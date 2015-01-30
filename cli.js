@@ -4,6 +4,7 @@
 'use strict';
 
 var conf = require('./conf.js'),
+    exit = require('exit'),
     configurationPath,
     isRead;
 
@@ -14,7 +15,7 @@ if( process.argv.length < 3
     console.log( 'Usage: node ' + process.argv[1] + ' [-u] <configuration path>\n\n' +
                  '-u: Update configuration. Configuration is read from stdin.\n' +
                  'Default is to display the configuration at stdout.');
-    process.exit(1);
+    exit(1);
 }
 
 isRead = process.argv.length === 3;
@@ -25,7 +26,7 @@ conf.initOnlyFiles(configurationPath);
 if( isRead) {
     var value = conf.get();
     process.stdout.write(JSON.stringify(value, null, 2));
-    process.exit();
+    exit(0);
 } else {
     process.stdin.setEncoding('utf8');
 
@@ -38,14 +39,14 @@ if( isRead) {
                 if(e instanceof SyntaxError) {
                     process.stderr.write('Invalid JSON: ');
                     process.stderr.write(e.message);
-                    process.exit(1);
+                    exit(1);
                 } else {
                     process.stderr.write(e);
-                    process.exit(2);
+                    exit(2);
                 }
             }
             conf.save(function () {
-                process.exit();
+                exit();
             })
         }
     });
