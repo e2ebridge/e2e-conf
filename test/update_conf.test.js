@@ -7,7 +7,7 @@ var fs = require('fs-extra'),
     path = require('path'),
     child_process = require('child_process');
 
-exports.testConf = {
+exports.testNoLocalConf = {
     setUp: function (callback) {
         var defaultPath;
         this.basePath = './tmp';
@@ -117,7 +117,7 @@ exports.testConf = {
 
 };
 
-exports.testConf2 = {
+exports.testLocalConf = {
     setUp: function (callback) {
         var defaultPath;
         this.basePath = './tmp';
@@ -137,7 +137,7 @@ exports.testConf2 = {
         callback();
     },
 
-    testUpdate: function (test) {
+    testUpdateChangedProperty: function (test) {
         var conf = this.conf,
             self = this,
             update;
@@ -168,8 +168,76 @@ exports.testConf2 = {
             '{ "connection": {"user": "changed", "passwd": "changed"}, ' +
             '"performance": {"truncateArrays": 100}, ' +
             '"NODE_ENV": "production"}');
-    }
+    },
 
+    testUpdateNewProperty: function (test) {
+        var conf = this.conf,
+            self = this,
+            update;
+
+        test.expect(2);
+
+        update = child_process.spawn(process.execPath, [
+            path.resolve(__dirname, '../cli.js'),
+            "-u",
+            this.basePath
+        ]);
+
+        update.on('close', function (code) {
+            test.equals(0, code);
+
+            conf.init(self.basePath);
+            test.deepEqual(fs.readJsonFileSync(conf.localFile()),
+                {
+                    connection: { user: 'local', passwd: 'local' },
+                    somethingnew: 1,
+                    performance: {}
+                }
+            );
+
+            test.done();
+        });
+
+        update.stdin.end(
+            '{ "somethingnew": 1, ' +
+            '"connection": { "user": "local", "passwd": "local" }, ' +
+            '"performance": {"truncateArrays": 100}, ' +
+            '"NODE_ENV": "production"}');
+    },
+
+    testUpdateInvalidJSON: function (test) {
+        var conf = this.conf,
+            self = this,
+            update,
+            output = '';
+
+        test.expect(3);
+
+        update = child_process.spawn(process.execPath, [
+            path.resolve(__dirname, '../cli.js'),
+            "-u",
+            this.basePath
+        ]);
+
+        update.on('close', function (code) {
+            test.equals(1, code);
+            test.equals('Invalid JSON: Unexpected token o', output);
+
+            conf.init(self.basePath);
+            test.deepEqual(fs.readJsonFileSync(conf.localFile()),
+                {
+                    connection: { user: 'local', passwd: 'local' }
+                }
+            );
+            test.done();
+        });
+
+        update.stderr.on('data', function(chunk){
+            output += chunk.toString();
+        });
+
+        update.stdin.end('no JSON');
+    }
 };
 
 
