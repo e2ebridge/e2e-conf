@@ -145,7 +145,8 @@ exports.testConf2 = {
         test.expect(2);
 
         update = child_process.spawn(process.execPath, [
-            path.resolve(__dirname, '../update_conf.js'),
+            path.resolve(__dirname, '../cli.js'),
+            "-u",
             this.basePath
         ]);
 
