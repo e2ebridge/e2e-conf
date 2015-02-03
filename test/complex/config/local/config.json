@@ -2,5 +2,6 @@
   "connection": {
     "user": "local",
     "passwd": "local"
-  }
+  },
+  "local": 1
 }

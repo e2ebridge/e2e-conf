@@ -32,9 +32,10 @@ if( isRead) {
 
     process.stdin.on('readable', function() {
         var chunk = process.stdin.read();
+        var actualConfig;
         if (chunk !== null) {
             try {
-                conf.setObject( JSON.parse(chunk));
+                actualConfig = JSON.parse(chunk);
             } catch (e) {
                 if(e instanceof SyntaxError) {
                     process.stderr.write('Invalid JSON: ');
@@ -45,7 +46,7 @@ if( isRead) {
                     exit(2);
                 }
             }
-            conf.save(function () {
+            conf.save(actualConfig, function () {
                 exit();
             })
         }

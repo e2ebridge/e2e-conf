@@ -135,12 +135,18 @@ exports.setObject = function setObject(object) {
 
 /**
  * Save changes to local configuration file (difference only).
+ * @param [actualConf] Current configuration which should be saved.
  * @param callback
  */
-exports.save = function save(callback) {
+exports.save = function save(actualConf, callback) {
     var self = this;
     if (!initialized) {
         self.init();
+    }
+
+    if (typeof actualConf === 'function') {
+        callback = actualConf;
+        actualConf = nconf.stores.local.store;
     }
 
     async.waterfall([
@@ -155,7 +161,6 @@ exports.save = function save(callback) {
             });
         },
         function (defaultConf, callback) {
-            var actualConf = nconf.stores.local.store;
             var diff = difference(defaultConf, actualConf);
 
             fs.writeFile(self.localFileName, JSON.stringify(diff, null, '  '), callback);

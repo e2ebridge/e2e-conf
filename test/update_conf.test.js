@@ -226,7 +226,8 @@ exports.testLocalConf = {
             conf.init(self.basePath);
             test.deepEqual(fs.readJsonFileSync(conf.localFile()),
                 {
-                    connection: { user: 'local', passwd: 'local' }
+                    connection: { user: 'local', passwd: 'local' },
+                    local: 1
                 }
             );
             test.done();
