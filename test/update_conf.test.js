@@ -156,8 +156,7 @@ exports.testConf2 = {
             conf.init(self.basePath);
             test.deepEqual(fs.readJsonFileSync(conf.localFile()),
                 {
-                    connection: { user: 'ttt', passwd: 'ee', client: 'ee', ashost: 'eee' },
-                    pool: {},
+                    connection: { user: 'changed', passwd: 'changed' },
                     performance: {}
                 }
             );
@@ -165,7 +164,10 @@ exports.testConf2 = {
             test.done();
         });
 
-        update.stdin.end('{\n  "connection": {\n    "sysid": "",\n    "sysnr": "",\n    "user": "ttt",\n    "passwd": "ee",\n    "client": "ee",\n    "ashost": "eee",\n    "lang": ""\n  },\n  "pool": {\n    "maxCount": 5,\n    "maxIdle": 300\n  },\n  "performance": {\n    "truncateArrays": 100\n  },\n  "debug": false,\n  "pageSize": 25,\n  "PORT": 3000,\n  "NODE_ENV": "production"\n}\n');
+        update.stdin.end(
+            '{ "connection": {"user": "changed", "passwd": "changed"}, ' +
+            '"performance": {"truncateArrays": 100}, ' +
+            '"NODE_ENV": "production"}');
     }
 
 };

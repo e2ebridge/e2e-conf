@@ -1,8 +1,6 @@
 {
   "connection": {
-    "user": "ee",
-    "passwd": "ee",
-    "client": "ee",
-    "ashost": "eee"
+    "user": "local",
+    "passwd": "local"
   }
 }
