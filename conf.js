@@ -92,7 +92,7 @@ exports.cleanUp = function cleanUp() {
 /**
  * Get a value.
  *
- * @param {String} key  If you want to get a property of an object use 'object_name:property'
+ * @param {String?} key  If you want to get a property of an object use 'object_name:property'
  * otherwise use simple 'root_property'.
  * @returns {*} Value of name or undefined. Can be a simple type, object or array.
  */
