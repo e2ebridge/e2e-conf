@@ -34,7 +34,7 @@ You can also use command-line arguments or environment variables to change the c
 4. default values (config/default/config.json)
 
 If you want to change the configuration from the program you can use **set()** to change it and **save()** to store it.
- The changes are save to **config/local/config.json** but only as difference to the default values from the file
+ The changes are saved to **config/local/config.json** but only as difference to the default values from the file
  **config/default/config.json**.
 
 The absolute file name of the changed values can be accessed with **localFile()** and the path of the default file with
@@ -58,7 +58,7 @@ nconf.argv()
 
 (The MIT License)
 
-Copyright (c) 2014 E2E Technologies
+Copyright (c) 2014-2015 E2E Technologies
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
