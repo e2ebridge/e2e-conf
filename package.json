@@ -26,11 +26,9 @@
             "email": "jzakrzewski@e2ebridge.com"
         }
     ],
-    "scripts": [
-        {
-            "test": "node ./node_modules/nodeunit/bin/nodeunit"
-        }
-    ],
+    "scripts": {
+        "test": "node ./node_modules/nodeunit/bin/nodeunit"
+    },
     "license": "MIT",
     "description": "E2E Bridge can manage service configurations for different deployments",
     "keywords": [
