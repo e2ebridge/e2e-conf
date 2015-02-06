@@ -54,14 +54,26 @@ exports.testConf = {
     testDifferenceObject: function (test) {
         var conf = this.conf;
 
-        test.deepEqual(conf._difference({o: {a: 1, b: 1, c: []}}, {o: {a: 2, b: 1, c: [2]}}), {o: {a: 2, c: [2]}});
+        test.deepEqual(conf._difference({
+            o: {a: 1, b: 1, c: []}
+        }, {
+            o: {a: 2, b: 1, c: [2]}
+        }), {
+            o: {a: 2, c: [2]}
+        });
         test.done();
     },
 
     testDifferencePreserveObjectProperties: function (test) {
         var conf = this.conf;
 
-        test.deepEqual(conf._difference({o: {a: 1, b: 1, c: []}}, {o: {a: 2, b: 1, c: [2], d: 7}}), {o: {a: 2, c: [2], d: 7}});
+        test.deepEqual(conf._difference({
+            o: {a: 1, b: 1, c: []}
+        }, {
+            o: {a: 2, b: 1, c: [2], d: 7}
+        }), {
+            o: {a: 2, c: [2], d: 7}
+        });
         test.done();
     },
 

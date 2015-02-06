@@ -31,7 +31,7 @@ exports.testNoLocalConf = {
 
         test.expect(1);
 
-        update = child_process.spawn(process.execPath, [ path.resolve(__dirname, '../cli.js'), "-u"]);
+        update = child_process.spawn(process.execPath, [path.resolve(__dirname, '../cli.js'), "-u"]);
 
         update.on('close', function (code) {
             test.equals(1, code);
@@ -44,7 +44,7 @@ exports.testNoLocalConf = {
 
         test.expect(1);
 
-        update = child_process.spawn(process.execPath, [ path.resolve(__dirname, '../cli.js'), "-wrong", "dir/"]);
+        update = child_process.spawn(process.execPath, [path.resolve(__dirname, '../cli.js'), "-wrong", "dir/"]);
 
         update.on('close', function (code) {
             test.equals(1, code);
@@ -105,14 +105,12 @@ exports.testNoLocalConf = {
             });
         });
 
-        update.stderr.on('data', function(chunk){
+        update.stderr.on('data', function (chunk) {
             output += chunk.toString();
         });
 
         update.stdin.end('no JSON');
     }
-
-
 
 
 };
@@ -156,7 +154,7 @@ exports.testLocalConf = {
             conf.init(self.basePath);
             test.deepEqual(fs.readJsonFileSync(conf.localFile()),
                 {
-                    connection: { user: 'changed', passwd: 'changed' },
+                    connection: {user: 'changed', passwd: 'changed'},
                     performance: {}
                 }
             );
@@ -189,7 +187,7 @@ exports.testLocalConf = {
             conf.init(self.basePath);
             test.deepEqual(fs.readJsonFileSync(conf.localFile()),
                 {
-                    connection: { user: 'local', passwd: 'local' },
+                    connection: {user: 'local', passwd: 'local'},
                     somethingnew: 1,
                     performance: {}
                 }
@@ -226,14 +224,14 @@ exports.testLocalConf = {
             conf.init(self.basePath);
             test.deepEqual(fs.readJsonFileSync(conf.localFile()),
                 {
-                    connection: { user: 'local', passwd: 'local' },
+                    connection: {user: 'local', passwd: 'local'},
                     local: 1
                 }
             );
             test.done();
         });
 
-        update.stderr.on('data', function(chunk){
+        update.stderr.on('data', function (chunk) {
             output += chunk.toString();
         });
 

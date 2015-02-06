@@ -37,8 +37,8 @@ function _initFiles(basePath) {
     this.localFileName = path.resolve(this.localDirectory, 'config.json');
     this.defaultFileName = path.resolve(basePath, 'config/default/config.json');
 
-    nconf.file('local', { file: this.localFileName })
-        .file('default', { file: this.defaultFileName });
+    nconf.file('local', {file: this.localFileName})
+        .file('default', {file: this.defaultFileName});
 }
 
 /**
@@ -151,12 +151,12 @@ exports.save = function save(actualConf, callback) {
 
     async.waterfall([
         function (callback) {
-            fs.ensureDir(self.localDirectory, function(err, dirName) {
+            fs.ensureDir(self.localDirectory, function (err, dirName) {
                 callback(err, dirName);
             });
         },
         function (dirName, callback) {
-            fs.readJsonFile(self.defaultFileName, function(err, defaultConf) {
+            fs.readJsonFile(self.defaultFileName, function (err, defaultConf) {
                 callback(err, defaultConf);
             });
         },

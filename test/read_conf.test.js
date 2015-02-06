@@ -31,7 +31,7 @@ exports.testConf = {
 
         test.expect(1);
 
-        subprocess = child_process.spawn( process.execPath, [ path.resolve( __dirname, '../cli.js')]);
+        subprocess = child_process.spawn(process.execPath, [path.resolve(__dirname, '../cli.js')]);
 
         subprocess.on('close', function (code) {
             test.equals(1, code);
@@ -46,15 +46,15 @@ exports.testConf = {
 
         test.expect(2);
 
-        subprocess = child_process.spawn( process.execPath, [
-            path.resolve( __dirname, '../cli.js'),
+        subprocess = child_process.spawn(process.execPath, [
+            path.resolve(__dirname, '../cli.js'),
             this.basePath
         ]);
 
         subprocess.stdout.setEncoding('utf8');
 
-        subprocess.stdout.on('data', function(chunk) {
-            test.equals( "{\n  \"hello\": \"world\",\n  \"sub\": {\n    \"a\": \"default\",\n    \"b\": \"default\"\n  },\n  \"many\": [\n    1,\n    2,\n    3\n  ]\n}", chunk);
+        subprocess.stdout.on('data', function (chunk) {
+            test.equals("{\n  \"hello\": \"world\",\n  \"sub\": {\n    \"a\": \"default\",\n    \"b\": \"default\"\n  },\n  \"many\": [\n    1,\n    2,\n    3\n  ]\n}", chunk);
         });
 
         subprocess.on('close', function (code) {
