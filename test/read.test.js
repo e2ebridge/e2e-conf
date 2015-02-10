@@ -31,9 +31,13 @@ exports.testConf = {
 
         testNoInit: function (test) {
             var conf = this.conf;
-
-            test.equal(conf.get('hello'), 'from env');
-            test.equal(conf.get('version'), undefined);
+            test.throws(
+                function() {
+                    conf.get('hello');
+                },
+                Error,
+                "e2e-conf hasn't been initialized."
+            );
             test.done();
         },
 
@@ -51,9 +55,9 @@ exports.testConf = {
     testDoubleInit: function (test) {
         var conf = this.conf;
 
-        conf.init();
+        conf.init(__dirname);
         test.throws(function () {
-            conf.init();
+            conf.init(__dirname);
         }, Error);
         test.done();
     },

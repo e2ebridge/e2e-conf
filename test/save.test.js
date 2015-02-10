@@ -112,7 +112,7 @@ exports.testConf = {
         test.expect(1);
 
         conf.save(function (err) {
-            test.equals(err.code, "ENOENT");
+            test.equals(err.message, "e2e-conf hasn't been initialized.");
 
             test.done();
         });

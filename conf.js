@@ -28,31 +28,39 @@ function compare(left, right) {
     }
 }
 
-function _initFiles(basePath) {
-    if (!basePath) {
-        basePath = '.';
+function _checkInitialized() {
+    if(!initialized) {
+        throw new Error("e2e-conf hasn't been initialized.");
+    }
+}
+
+function _initFiles(configPath, localConfig) {
+    if (!configPath) {
+        throw new Error("Cannot initialize e2e-conf without config path");
     }
 
-    this.localDirectory = path.resolve(basePath, 'config/local');
-    this.localFileName = path.resolve(this.localDirectory, 'config.json');
-    this.defaultFileName = path.resolve(basePath, 'config/default/config.json');
+    this.defaultFileName = localConfig ? configPath : path.resolve(configPath, 'config/default/config.json');
+    this.localDirectory = localConfig ? path.dirname(localConfig) : path.resolve(configPath, 'config/local');
+    this.localFileName = localConfig ? localConfig : path.resolve(this.localDirectory, 'config.json');
 
     nconf.file('local', {file: this.localFileName})
         .file('default', {file: this.defaultFileName});
 }
 
 /**
- * Initialize the configuration with custom path.
+ * Initialize the configuration with custom path(s).
  *
- * @param {String?} basePath Directory where the configuration files are looked up.
+ * @param {String} configPath Directory where the configuration files are looked up or path to default config file.
+ * @param {String?} localConfig Path to local config file. If given, configPath is interpreted as path to default config file.
+ *
  */
-exports.init = function init(basePath) {
+exports.init = function init(configPath, localConfig) {
     if (!initialized) {
 
         nconf.argv()
             .env('__');
 
-        _initFiles.apply(this, [basePath]);
+        _initFiles.apply(this, arguments);
 
         initialized = true;
     } else {
@@ -61,15 +69,16 @@ exports.init = function init(basePath) {
 };
 
 /**
- * Initialize the configuration with custom path and only values from files and not from program arguments
+ * Initialize the configuration with custom path(s) and only values from files and not from program arguments
  * or environment.
  *
- * @param {String} basePath Directory where the configuration files are looked up.
+ * @param {String} configPath Directory where the configuration files are looked up or path to default config file.
+ * @param {String?} localConfig Path to local config file. If given, configPath is interpreted as path to default config file.
  */
-exports.initOnlyFiles = function init(basePath) {
+exports.initOnlyFiles = function init(configPath, localConfig) {
     if (!initialized) {
 
-        _initFiles.apply(this, [basePath]);
+        _initFiles.apply(this, arguments);
 
         initialized = true;
     } else {
@@ -97,9 +106,7 @@ exports.cleanUp = function cleanUp() {
  * @returns {*} Value of name or undefined. Can be a simple type, object or array.
  */
 exports.get = function get(key) {
-    if (!initialized) {
-        this.init();
-    }
+    _checkInitialized()
 
     return nconf.get(key);
 };
@@ -111,9 +118,7 @@ exports.get = function get(key) {
  * @param {literal|Object} value Value for the specified key
  */
 exports.set = function set(key, value) {
-    if (!initialized) {
-        this.init();
-    }
+    _checkInitialized()
 
     return nconf.set(key, value);
 };
@@ -124,9 +129,7 @@ exports.set = function set(key, value) {
  * @param {Object} object Values to set.
  */
 exports.setObject = function setObject(object) {
-    if (!initialized) {
-        this.init();
-    }
+    _checkInitialized()
 
     Object.keys(object).forEach(function (prop) {
         nconf.set(prop, object[prop]);
@@ -140,13 +143,20 @@ exports.setObject = function setObject(object) {
  */
 exports.save = function save(actualConf, callback) {
     var self = this;
-    if (!initialized) {
-        self.init();
-    }
 
     if (typeof actualConf === 'function') {
         callback = actualConf;
-        actualConf = nconf.stores.local.store;
+        actualConf = nconf.stores.local && nconf.stores.local.store;
+    }
+
+    try {
+        _checkInitialized();
+    } catch(e) {
+        if(typeof callback === 'function') {
+            return callback(e);
+        } else {
+            throw e;
+        }
     }
 
     async.waterfall([
@@ -174,9 +184,7 @@ exports.save = function save(actualConf, callback) {
  * @returns {String} Local configuration file path
  */
 exports.localFile = function localFile() {
-    if (!initialized) {
-        this.init();
-    }
+    _checkInitialized()
 
     return this.localFileName;
 };
@@ -187,9 +195,7 @@ exports.localFile = function localFile() {
  * @returns {String} Default configuration file path
  */
 exports.defaultFile = function defaultFile() {
-    if (!initialized) {
-        this.init();
-    }
+    _checkInitialized()
 
     return this.defaultFileName;
 };

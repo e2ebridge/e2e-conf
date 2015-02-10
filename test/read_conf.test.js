@@ -34,7 +34,7 @@ exports.testConf = {
         subprocess = child_process.spawn(process.execPath, [path.resolve(__dirname, '../cli.js')]);
 
         subprocess.on('close', function (code) {
-            test.equals(1, code);
+            test.equals(code, 1);
             test.done();
         });
     },
@@ -58,7 +58,7 @@ exports.testConf = {
         });
 
         subprocess.on('close', function (code) {
-            test.equals(0, code);
+            test.equals(code, 0);
             test.done();
         });
     }

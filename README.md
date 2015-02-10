@@ -2,8 +2,8 @@
 
 ## Description
 
-If you use this module to access your configuration values then you can edit your configuration with a nice UI inside 
- the E2E Bridge. At each deployment for development, testing or production you can change the configuration to match 
+If you use this module to access your configuration values then you can edit your configuration with a nice UI inside
+ the E2E Bridge. At each deployment for development, testing or production you can change the configuration to match
  the environment and your needs.
 Technically it is a wrapper to [nconf](https://github.com/flatiron/nconf).
 
@@ -19,6 +19,7 @@ As with all other Node.js modules, you need to require it and then you can read 
 
 ```js
 var conf = require('e2e-conf');
+conf.init(__dirname);
 
 var port = conf.get('host:port');
 ```
@@ -26,7 +27,7 @@ var port = conf.get('host:port');
 You must add a JSON file **config/default/config.json** to your service where you define all possible configuration
 names and default values. The E2E Bridge will store all changed values to **config/local/config.json** which overrides
 the default values.
- 
+
 You can also use command-line arguments or environment variables to change the configuration values. The order is:
 1. command-line arguments
 2. environment variables
@@ -49,12 +50,12 @@ module directly. You still need to use the same paths for the JSON files.
 var nconf = require('nconf');
 nconf.argv()
     .env('__')
-    .file('local', { file: './config/local/config.json') })
-    .file('default', { file: './config/default/config.json') });
+    .file('local', { file: __dirname + '/config/local/config.json') })
+    .file('default', { file: __dirname + '/config/default/config.json') });
 
 ```
 
-## License 
+## License
 
 (The MIT License)
 
