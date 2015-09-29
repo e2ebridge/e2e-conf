@@ -19,14 +19,21 @@ exports.testConf = {
     testNoDifference: function (test) {
         var conf = this.conf;
 
-        test.deepEqual(conf._difference({a: 1}, {a: 1}), {});
+        test.deepEqual(conf._difference({a: 1}, {a: 1}), undefined);
         test.done();
     },
 
-    testNoDifference2: function (test) {
+    testNoDifferenceSubObject: function (test) {
         var conf = this.conf;
 
-        test.deepEqual(conf._difference({a: 1}, {}), {});
+        test.deepEqual(conf._difference({a: {b: 1}, c: 'default'}, {a: {b: 1}, c: 'changed'}), {c: 'changed'});
+        test.done();
+    },
+
+    testMissingProperty: function (test) {
+        var conf = this.conf;
+
+        test.deepEqual(conf._difference({a: 1}, {}), undefined);
         test.done();
     },
 
@@ -80,7 +87,7 @@ exports.testConf = {
     testDifferenceObjectAndEmpty: function (test) {
         var conf = this.conf;
 
-        test.deepEqual(conf._difference({o: {a: 1, b: 1, c: []}}, {}), {});
+        test.deepEqual(conf._difference({o: {a: 1, b: 1, c: []}}, {}), undefined);
         test.done();
     },
 
@@ -105,7 +112,7 @@ exports.testConf = {
     testDifferenceSubArrayNoDifference: function (test) {
         var conf = this.conf;
 
-        test.deepEqual(conf._difference({a:['b','c']}, {a:['b','c']}), {});
+        test.deepEqual(conf._difference({a:['b','c']}, {a:['b','c']}), undefined);
         test.done();
     },
 

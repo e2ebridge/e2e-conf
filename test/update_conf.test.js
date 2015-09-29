@@ -154,8 +154,7 @@ exports.testLocalConf = {
             conf.init(self.basePath);
             test.deepEqual(fs.readJsonFileSync(conf.localFile()),
                 {
-                    connection: {user: 'changed', passwd: 'changed'},
-                    performance: {}
+                    connection: {user: 'changed', passwd: 'changed'}
                 }
             );
 
@@ -188,8 +187,7 @@ exports.testLocalConf = {
             test.deepEqual(fs.readJsonFileSync(conf.localFile()),
                 {
                     connection: {user: 'local', passwd: 'local'},
-                    somethingnew: 1,
-                    performance: {}
+                    somethingnew: 1
                 }
             );
 

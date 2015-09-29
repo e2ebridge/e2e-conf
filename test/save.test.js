@@ -26,11 +26,11 @@ exports.testConf = {
         callback();
     },
 
-    testChangeProperty: function (test) {
+    testChangePropertyAndRollback: function (test) {
         var conf = this.conf,
             self = this;
 
-        test.expect(5);
+        test.expect(8);
 
         conf.init(this.basePath);
         test.equals(conf.get('hello'), 'world');
@@ -44,7 +44,18 @@ exports.testConf = {
                 {
                     hello: 'changed'
                 });
-            test.done();
+
+            // rollback the changes
+            test.equals(true, conf.set('hello', 'world'));
+
+            conf.save(function (err) {
+                var resolve = path.resolve(self.localConfig);
+                test.ifError(err);
+
+                test.deepEqual(fs.existsSync(resolve), false);
+
+                test.done();
+            });
         });
 
     },
@@ -100,7 +111,8 @@ exports.testConf = {
             var resolve = path.resolve(self.localConfig);
             test.ifError(err);
 
-            test.deepEqual(fs.readJsonFileSync(resolve), {});
+            test.deepEqual(fs.existsSync(resolve), false);
+
             test.done();
         });
     },

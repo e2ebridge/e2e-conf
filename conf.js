@@ -170,7 +170,11 @@ exports.save = function save(actualConf, callback) {
         function (defaultConf, callback) {
             var diff = difference(defaultConf, actualConf);
 
-            fs.writeFile(self.localFileName, JSON.stringify(diff, null, '  '), callback);
+            if( diff === undefined) {
+                fs.delete(self.localFileName, callback);
+            } else {
+                fs.writeFile(self.localFileName, JSON.stringify(diff, null, '  '), callback);
+            }
         }
     ], callback);
 };
@@ -198,7 +202,8 @@ exports.defaultFile = function defaultFile() {
 };
 
 var difference = exports._difference = function difference(base, actual) {
-    var diff = {};
+    var diff = {},
+        same = true;
 
     if (Array.isArray(base)) {
         diff = compare(base, actual) ? undefined : actual;
@@ -212,17 +217,23 @@ var difference = exports._difference = function difference(base, actual) {
                     localDiff = difference(value, actual[prop]);
                     if( localDiff !== undefined) {
                         diff[prop] = localDiff;
+                        same = false;
                     }
                 } else {
                     if (value !== actual[prop]) {
                         diff[prop] = actual[prop];
+                        same = false;
                     }
                 }
             }
             else {
                 diff[prop] = actual[prop];
+                same = false;
             }
         });
+        if(same) {
+            diff = undefined;
+        }
     }
 
     return diff;
