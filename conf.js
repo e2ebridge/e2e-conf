@@ -204,13 +204,18 @@ var difference = exports._difference = function difference(base, actual) {
     var diff = {};
 
     if (Array.isArray(base)) {
-        diff = compare(base, actual) ? [] : actual;
+        diff = compare(base, actual) ? undefined : actual;
     } else {
         Object.keys(actual).forEach(function (prop) {
-            var value = base[prop];
+            var value = base[prop],
+                localDiff;
+
             if (prop in base) {
                 if (value instanceof Object) {
-                    diff[prop] = difference(value, actual[prop]);
+                    localDiff = difference(value, actual[prop]);
+                    if( localDiff !== undefined) {
+                        diff[prop] = localDiff;
+                    }
                 } else {
                     if (value !== actual[prop]) {
                         diff[prop] = actual[prop];

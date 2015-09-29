@@ -98,9 +98,31 @@ exports.testConf = {
             {a: 1}
         ], [
             {a: 1}
-        ]), []);
+        ]), undefined);
+        test.done();
+    },
+
+    testDifferenceSubArrayNoDifference: function (test) {
+        var conf = this.conf;
+
+        test.deepEqual(conf._difference({a:['b','c']}, {a:['b','c']}), {});
+        test.done();
+    },
+
+    testDifferenceSubArrayAddElement: function (test) {
+        var conf = this.conf;
+
+        test.deepEqual(conf._difference({a:['b','c']}, {a:['b','c','d']}), {a:['b','c','d']});
+        test.done();
+    },
+
+    testDifferenceSubArrayRemoveElement: function (test) {
+        var conf = this.conf;
+
+        test.deepEqual(conf._difference({a:['b','c']}, {a:['c']}), {a:['c']});
         test.done();
     }
+
 };
 
 
