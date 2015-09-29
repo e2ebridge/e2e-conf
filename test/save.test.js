@@ -61,8 +61,7 @@ exports.testConf = {
     },
 
     testChangeObject: function (test) {
-        var conf = this.conf,
-            self = this;
+        var conf = this.conf;
 
         test.expect(4);
 
@@ -118,8 +117,7 @@ exports.testConf = {
     },
 
     testSaveWithoutInit: function (test) {
-        var conf = this.conf,
-            self = this;
+        var conf = this.conf;
 
         test.expect(1);
 

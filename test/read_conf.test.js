@@ -40,9 +40,7 @@ exports.testConf = {
     },
 
     testRead: function (test) {
-        var conf = this.conf,
-            self = this,
-            subprocess;
+        var subprocess;
 
         test.expect(2);
 

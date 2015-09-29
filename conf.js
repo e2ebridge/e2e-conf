@@ -103,7 +103,7 @@ exports.cleanUp = function cleanUp() {
  * @returns {*} Value of name or undefined. Can be a simple type, object or array.
  */
 exports.get = function get(key) {
-    _checkInitialized()
+    _checkInitialized();
 
     return nconf.get(key);
 };
@@ -115,7 +115,7 @@ exports.get = function get(key) {
  * @param {literal|Object} value Value for the specified key
  */
 exports.set = function set(key, value) {
-    _checkInitialized()
+    _checkInitialized();
 
     return nconf.set(key, value);
 };
@@ -126,7 +126,7 @@ exports.set = function set(key, value) {
  * @param {Object} object Values to set.
  */
 exports.setObject = function setObject(object) {
-    _checkInitialized()
+    _checkInitialized();
 
     Object.keys(object).forEach(function (prop) {
         nconf.set(prop, object[prop]);
@@ -185,7 +185,7 @@ exports.save = function save(actualConf, callback) {
  * @returns {String} Local configuration file path
  */
 exports.localFile = function localFile() {
-    _checkInitialized()
+    _checkInitialized();
 
     return this.localFileName;
 };
@@ -196,7 +196,7 @@ exports.localFile = function localFile() {
  * @returns {String} Default configuration file path
  */
 exports.defaultFile = function defaultFile() {
-    _checkInitialized()
+    _checkInitialized();
 
     return this.defaultFileName;
 };
