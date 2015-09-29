@@ -17,12 +17,9 @@ function compare(left, right) {
         if (left.length !== right.length) {
             return false;
         }
-        Object.keys(left).forEach(function (prop) {
-            if (!compare(left[prop], right[prop])) {
-                return false;
-            }
+        return Object.keys(left).every(function (prop) {
+            return compare(left[prop], right[prop]);
         });
-        return true;
     } else {
         return left === right;
     }

@@ -109,6 +109,13 @@ exports.testConf = {
         test.done();
     },
 
+    testDifferenceSubArrayChangeElement: function (test) {
+        var conf = this.conf;
+
+        test.deepEqual(conf._difference({a:['b','c']}, {a:['b','changed']}), {a:['b','changed']});
+        test.done();
+    },
+
     testDifferenceSubArrayAddElement: function (test) {
         var conf = this.conf;
 
@@ -120,6 +127,13 @@ exports.testConf = {
         var conf = this.conf;
 
         test.deepEqual(conf._difference({a:['b','c']}, {a:['c']}), {a:['c']});
+        test.done();
+    },
+
+    testDifferenceSubArrayReorderElements: function (test) {
+        var conf = this.conf;
+
+        test.deepEqual(conf._difference({a:['b','c']}, {a:['c','b']}), {a:['c','b']});
         test.done();
     }
 
