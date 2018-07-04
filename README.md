@@ -55,6 +55,13 @@ nconf.argv()
 
 ```
 
+## Changelog
+
+### 3.0.0 (2018-07-11)
+- The command line interface to update a configuration reads now from a file instead of stdin,
+  because stdin has a size limitation.
+
+
 ## License
 
 (The MIT License)
