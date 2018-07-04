@@ -1,0 +1,7 @@
+{
+  "connection": {"user": "changed", "passwd": "changed"},
+  "performance": {
+    "truncateArrays": 100
+  },
+  "NODE_ENV": "production"
+}

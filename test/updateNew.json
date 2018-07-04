@@ -1,0 +1,11 @@
+{
+  "somethingnew": 1,
+  "connection": {
+    "user": "local",
+    "passwd": "local"
+  },
+  "performance": {
+    "truncateArrays": 100
+  },
+  "NODE_ENV": "production"
+}

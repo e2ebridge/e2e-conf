@@ -34,7 +34,7 @@ exports.testNoLocalConf = {
         update = child_process.spawn(process.execPath, [path.resolve(__dirname, '../cli.js'), "-u"]);
 
         update.on('close', function (code) {
-            test.equals(1, code);
+            test.equals(code, 2);
             test.done();
         });
     },
@@ -47,7 +47,7 @@ exports.testNoLocalConf = {
         update = child_process.spawn(process.execPath, [path.resolve(__dirname, '../cli.js'), "-wrong", "dir/"]);
 
         update.on('close', function (code) {
-            test.equals(1, code);
+            test.equals(code, 2);
             test.done();
         });
     },
@@ -61,12 +61,12 @@ exports.testNoLocalConf = {
 
         update = child_process.spawn(process.execPath, [
             path.resolve(__dirname, '../cli.js'),
-            "-u",
+            '-u', 'test/hello.json',
             this.basePath
         ]);
 
         update.on('close', function (code) {
-            test.equals(0, code);
+            test.equals(code, 0);
 
             conf.init(self.basePath);
             test.deepEqual(fs.readJsonFileSync(conf.localFile()),
@@ -76,8 +76,6 @@ exports.testNoLocalConf = {
 
             test.done();
         });
-
-        update.stdin.end('{"hello":"changed"}');
     },
 
     testInvalidJSON: function (test) {
@@ -90,13 +88,13 @@ exports.testNoLocalConf = {
 
         update = child_process.spawn(process.execPath, [
             path.resolve(__dirname, '../cli.js'),
-            "-u",
+            '-u', 'test/invalid.json',
             this.basePath
         ]);
 
         update.on('close', function (code) {
             test.equals(1, code);
-            test.notEqual(output.search(/Invalid JSON: Unexpected token o/), -1);
+            test.notEqual(output.search(/Unexpected token o in JSON at position 1/), -1);
 
             conf.init(self.basePath);
             fs.stat(conf.localFile(), function (err) {
@@ -108,8 +106,6 @@ exports.testNoLocalConf = {
         update.stderr.on('data', function (chunk) {
             output += chunk.toString();
         });
-
-        update.stdin.end('no JSON');
     }
 
 
@@ -144,12 +140,12 @@ exports.testLocalConf = {
 
         update = child_process.spawn(process.execPath, [
             path.resolve(__dirname, '../cli.js'),
-            "-u",
+            '-u', 'test/updateChanged.json',
             this.basePath
         ]);
 
         update.on('close', function (code) {
-            test.equals(0, code);
+            test.equals(code, 0);
 
             conf.init(self.basePath);
             test.deepEqual(fs.readJsonFileSync(conf.localFile()),
@@ -160,11 +156,6 @@ exports.testLocalConf = {
 
             test.done();
         });
-
-        update.stdin.end(
-            '{ "connection": {"user": "changed", "passwd": "changed"}, ' +
-            '"performance": {"truncateArrays": 100}, ' +
-            '"NODE_ENV": "production"}');
     },
 
     testUpdateNewProperty: function (test) {
@@ -176,7 +167,7 @@ exports.testLocalConf = {
 
         update = child_process.spawn(process.execPath, [
             path.resolve(__dirname, '../cli.js'),
-            "-u",
+            '-u', 'test/updateNew.json',
             this.basePath
         ]);
 
@@ -193,12 +184,6 @@ exports.testLocalConf = {
 
             test.done();
         });
-
-        update.stdin.end(
-            '{ "somethingnew": 1, ' +
-            '"connection": { "user": "local", "passwd": "local" }, ' +
-            '"performance": {"truncateArrays": 100}, ' +
-            '"NODE_ENV": "production"}');
     },
 
     testUpdateInvalidJSON: function (test) {
@@ -211,13 +196,13 @@ exports.testLocalConf = {
 
         update = child_process.spawn(process.execPath, [
             path.resolve(__dirname, '../cli.js'),
-            "-u",
+            '-u', 'test/invalid.json',
             this.basePath
         ]);
 
         update.on('close', function (code) {
-            test.equals(1, code);
-            test.notEqual(output.search(/Invalid JSON: Unexpected token o/), -1);
+            test.equals(code, 1);
+            test.notEqual(output.search(/Unexpected token o in JSON at position 1/), -1);
 
             conf.init(self.basePath);
             test.deepEqual(fs.readJsonFileSync(conf.localFile()),
@@ -232,8 +217,6 @@ exports.testLocalConf = {
         update.stderr.on('data', function (chunk) {
             output += chunk.toString();
         });
-
-        update.stdin.end('no JSON');
     }
 };
 
