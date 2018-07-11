@@ -59,7 +59,7 @@ nconf.argv()
 
 (The MIT License)
 
-Copyright (c) 2014-2015 E2E Technologies
+Copyright (c) 2014-2018 Scheer E2E AG
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
