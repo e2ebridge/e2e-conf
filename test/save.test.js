@@ -142,8 +142,7 @@ exports.testConf = {
         fs.copySync(path.resolve(__dirname, 'save.test.js'), conf.defaultFile());
 
         conf.save(function (err) {
-            test.ok((err.message === 'Unexpected token /') // node > 4.0
-                 || (err.type === "unexpected_token"));   // node = 0.10
+            test.ok(err.message.search(/unexpected[ _]token/i) !== -1);
 
             test.done();
         });

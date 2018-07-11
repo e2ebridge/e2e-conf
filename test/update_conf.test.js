@@ -96,7 +96,7 @@ exports.testNoLocalConf = {
 
         update.on('close', function (code) {
             test.equals(1, code);
-            test.equals('Invalid JSON: Unexpected token o', output);
+            test.notEqual(output.search(/Invalid JSON: Unexpected token o/), -1);
 
             conf.init(self.basePath);
             fs.stat(conf.localFile(), function (err) {
@@ -217,7 +217,7 @@ exports.testLocalConf = {
 
         update.on('close', function (code) {
             test.equals(1, code);
-            test.equals('Invalid JSON: Unexpected token o', output);
+            test.notEqual(output.search(/Invalid JSON: Unexpected token o/), -1);
 
             conf.init(self.basePath);
             test.deepEqual(fs.readJsonFileSync(conf.localFile()),
