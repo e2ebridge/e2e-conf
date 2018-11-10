@@ -39,8 +39,13 @@ if (uploadPath) {
             }
         }
         if (actualConfig !== null) {
-            conf.save(actualConfig, function () {
-                exit();
+            conf.save(actualConfig, function (err) {
+                if (err) {
+                    process.stderr.write(err.message);
+                    exit(2);
+                } else {
+                    exit();
+                }
             });
         }
     });
