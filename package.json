@@ -1,6 +1,6 @@
 {
     "name": "e2e-conf",
-    "version": "3.0.2",
+    "version": "3.0.3",
     "main": "conf.js",
     "dependencies": {
         "nconf": "^0.10.0",
