@@ -21,7 +21,7 @@ exports.testConf = {
 
     tearDown: function (callback) {
         this.conf.cleanUp();
-        fs.deleteSync(this.basePath);
+        fs.removeSync(this.basePath);
 
         callback();
     },

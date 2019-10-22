@@ -163,7 +163,7 @@ exports.save = function save(actualConf, callback) {
             });
         },
         function (dirName, callback) {
-            fs.readJsonFile(self.defaultFileName, function (err, defaultConf) {
+            fs.readJson(self.defaultFileName, function (err, defaultConf) {
                 callback(err, defaultConf);
             });
         },
@@ -171,7 +171,7 @@ exports.save = function save(actualConf, callback) {
             var diff = difference(defaultConf, actualConf);
 
             if( diff === undefined) {
-                fs.delete(self.localFileName, callback);
+                fs.remove(self.localFileName, callback);
             } else {
                 fs.writeFile(self.localFileName, JSON.stringify(diff, null, '  '), callback);
             }

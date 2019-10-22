@@ -21,7 +21,7 @@ exports.testConf = {
 
     tearDown: function (callback) {
         this.conf.cleanUp();
-        fs.deleteSync(this.basePath);
+        fs.removeSync(this.basePath);
 
         callback();
     },
@@ -40,7 +40,7 @@ exports.testConf = {
         conf.save(function (err) {
             test.ifError(err);
 
-            test.deepEqual(fs.readJsonFileSync(conf.localFile()),
+            test.deepEqual(fs.readJsonSync(conf.localFile()),
                 {
                     hello: 'changed'
                 });
@@ -83,7 +83,7 @@ exports.testConf = {
         conf.save(function (err) {
             test.ifError(err);
 
-            test.deepEqual(fs.readJsonFileSync(conf.localFile()),
+            test.deepEqual(fs.readJsonSync(conf.localFile()),
                 {
                     "hello": "changed",
                     "sub": {

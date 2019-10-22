@@ -21,7 +21,7 @@ exports.testNoLocalConf = {
 
     tearDown: function (callback) {
         this.conf.cleanUp();
-        fs.deleteSync(this.basePath);
+        fs.removeSync(this.basePath);
 
         callback();
     },
@@ -69,7 +69,7 @@ exports.testNoLocalConf = {
             test.equals(code, 0);
 
             conf.init(self.basePath);
-            test.deepEqual(fs.readJsonFileSync(conf.localFile()),
+            test.deepEqual(fs.readJsonSync(conf.localFile()),
                 {
                     hello: 'changed'
                 });
@@ -126,7 +126,7 @@ exports.testLocalConf = {
 
     tearDown: function (callback) {
         this.conf.cleanUp();
-        fs.deleteSync(this.basePath);
+        fs.removeSync(this.basePath);
 
         callback();
     },
@@ -148,7 +148,7 @@ exports.testLocalConf = {
             test.equals(code, 0);
 
             conf.init(self.basePath);
-            test.deepEqual(fs.readJsonFileSync(conf.localFile()),
+            test.deepEqual(fs.readJsonSync(conf.localFile()),
                 {
                     connection: {user: 'changed', passwd: 'changed'}
                 }
@@ -175,7 +175,7 @@ exports.testLocalConf = {
             test.equals(0, code);
 
             conf.init(self.basePath);
-            test.deepEqual(fs.readJsonFileSync(conf.localFile()),
+            test.deepEqual(fs.readJsonSync(conf.localFile()),
                 {
                     connection: {user: 'local', passwd: 'local'},
                     somethingnew: 1
@@ -205,7 +205,7 @@ exports.testLocalConf = {
             test.notEqual(output.search(/Unexpected token o in JSON at position 1/), -1);
 
             conf.init(self.basePath);
-            test.deepEqual(fs.readJsonFileSync(conf.localFile()),
+            test.deepEqual(fs.readJsonSync(conf.localFile()),
                 {
                     connection: {user: 'local', passwd: 'local'},
                     local: 1

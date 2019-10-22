@@ -28,7 +28,7 @@ const args = argParser.parseArgs(),
 conf.initOnlyFiles(args['configPath']);
 
 if (uploadPath) {
-    fs.readJsonFile(uploadPath, function (err, actualConfig) {
+    fs.readJson(uploadPath, function (err, actualConfig) {
         if (err) {
             if (err instanceof SyntaxError) {
                 process.stderr.write(`Invalid JSON: ${err.message}`);
